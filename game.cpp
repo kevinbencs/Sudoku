@@ -12,6 +12,7 @@ Game::Game(QWidget *parent) :
     ui(new Ui::Game)
 {
     ui->setupUi(this);
+    setWindowFlags(Qt::Window);
 
 }
 
@@ -23,7 +24,7 @@ Game::~Game()
 
 
 
-
+//check the number is in the row
 bool Game::row_check(int sudoku[9][9],const int &x,const int &number)
 {
     bool NumberIsOk=true;
@@ -37,7 +38,7 @@ bool Game::row_check(int sudoku[9][9],const int &x,const int &number)
 
 
 
-
+//check the number is in the column
 bool Game::column_check(int sudoku[9][9], const int &y, const int &number)
 {
     bool NumberIsOk=true;
@@ -52,7 +53,7 @@ bool Game::column_check(int sudoku[9][9], const int &y, const int &number)
 
 
 
-
+//check the number is in the 3X3 region
 bool Game::region_check(int sudoku[9][9], const int &x, const int &y, const int &number)
 {
     int sudoku_region[9][9]={{0,1,2,9,10,11,18,19,20},
@@ -97,7 +98,7 @@ bool Game::region_check(int sudoku[9][9], const int &x, const int &y, const int 
 
 
 
-
+//check the number is in the 3X3 region
 bool Game::region_check(int sudoku[9][9],const int &row, const int &number)
 {
     int sudoku_region[9][9]={{0,1,2,9,10,11,18,19,20},
@@ -129,7 +130,7 @@ bool Game::region_check(int sudoku[9][9],const int &row, const int &number)
 
 
 
-
+//try writing numbers into the cells
 bool Game::cell_solve(int sudoku[9][9],int &n)
 {
     int x, y, number,x_2,y_2,NumberCounter,number2;
@@ -166,7 +167,7 @@ bool Game::cell_solve(int sudoku[9][9],int &n)
 
 
 
-
+//try writing numbers into the 3X3 regions
 bool Game::region_solve(int sudoku[9][9],int &n)
 {
     int sudoku_region[9][9]={{0,1,2,9,10,11,18,19,20},
@@ -221,7 +222,7 @@ bool Game::region_solve(int sudoku[9][9],int &n)
 
 
 
-
+//try writing numbers into the rows
 bool Game::row_solve(int sudoku[9][9],int &n)
 {
     int x, y, x_2, y_2, NumberCount,number,number2;
@@ -257,7 +258,7 @@ bool Game::row_solve(int sudoku[9][9],int &n)
 
 
 
-
+//try writing numbers into the columns
 bool Game::column_solve(int sudoku[9][9],int &n)
 {
     int x, y, x_2, y_2, NumberCount,number,number2;
@@ -312,26 +313,50 @@ void Game::copy(int sudoku[9][9],int sudoku2[9][9])
 }
 
 
-void Game::numbers_delete(int sudoku[9][9],int delete_number)
+
+
+//delete the numbers from the solution
+void Game::numbers_delete(int sudoku[9][9],int delete_numbers)
 {
-    int x,y,m,n;
+    int x,y,m,n,l;
     srand(time(0));
     m=0;
     int sudoku2[9][9];
     bool WriteNumber;
+    int cannot_delete_number=0;
+    std::vector<std::pair<int,int>> v;
 
-    for(int number=1;number<delete_number; number++){
-        x=rand()%9;
-        y=rand()%9;
+
+    for(int number=1;number<delete_numbers; number++){
 
         copy(sudoku,sudoku2);
+
+        if (delete_numbers>50 && cannot_delete_number>=500){
+            break;
+        }
+
+        for(x=0;x<9;x++){
+            for(y=0;y<9;y++){
+                if(sudoku[x][y]!=0){
+                    v.push_back(std::make_pair(x,y));
+                }
+            }
+        }
+
+
+        l=rand()%v.size();
+
+        x=v[l].first;
+        y=v[l].second;
+
 
 
         sudoku[x][y]=0;
         m++;
         n=0;
-        WriteNumber=true;
 
+        WriteNumber=true;
+        //solve the sudoku
         while(WriteNumber){
 
             if(cell_solve(sudoku, n) || row_solve(sudoku,n) || column_solve(sudoku,n) || region_solve(sudoku,n)){
@@ -345,15 +370,16 @@ void Game::numbers_delete(int sudoku[9][9],int delete_number)
 
         copy(sudoku2,sudoku);
 
+        //can't solve the sudoku
         if(n!=m){
             m--;
             number-=1;
+            cannot_delete_number++;
         }
-        else{
+        else{//can solve the sudoku
             sudoku[x][y]=0;
+            cannot_delete_number=0;
         }
-
-
 
     }
 }
@@ -362,7 +388,11 @@ void Game::numbers_delete(int sudoku[9][9],int delete_number)
 
 
 
-void Game::start(int delete_number)
+
+
+
+
+void Game::start(int delete_numbers)
 {
     int sudoku[9][9]={{0,0,0,0,0,0,0,0,0},
                      {0,0,0,0,0,0,0,0,0},
@@ -386,14 +416,14 @@ void Game::start(int delete_number)
 
 
 
-    int x,y,number,row,i,x_2,y_2;
-    bool NumberIsZero,SolutionIsGood;
+    int x,y,number,i,m;
+    bool NumberIsZero,SolutionIsNotGood=true;
     Solution solution;
 
     srand(time(0));
 
 
-
+    //adjust the heigth and width of the table cells
     for (i = 0; i < 9; ++i) {
         ui->tableWidget->setColumnWidth(i,51);
         ui->tableWidget->setRowHeight(i,51);
@@ -402,70 +432,51 @@ void Game::start(int delete_number)
 
 
 
-    i=1;
+    while(SolutionIsNotGood){
+        i=1;
+        //generate 17 numbers
+        while (i < 18) {
+
+            NumberIsZero=true;
+            x=rand()%9;
+            y=rand()%9;
+            number=rand()%9+1;
 
 
-    while (i < 18) {
-
-        NumberIsZero=true;
-        x=rand()%9;
-        y=rand()%9;
-        number=rand()%9+1;
-
-
-        if(sudoku[x][y]!=0){
-            NumberIsZero=false;
-        }
-
-
-        for (int j = 0; j < 9; ++j) {
-            if(sudoku[x][j]==number){
+            if(sudoku[x][y]==0 && region_check(sudoku,x,y,number) && row_check(sudoku,x,number) && column_check(sudoku,y,number)){
+                NumberIsZero=true;
+            }
+            else{
                 NumberIsZero=false;
             }
-        }
 
 
-        for (int j = 0; j < 9; ++j) {
-            if(sudoku[j][y]==number){
-                NumberIsZero=false;
+            if(NumberIsZero==true){
+                sudoku[x][y]=number;
+                ++i;
             }
+
         }
+        //solve the sudoku
+        m=solution.solve(sudoku);
 
-
-        for (int i = 0; i < 9; ++i) {
-            for (int var = 0; var < 9; ++var) {
-                if (sudoku_region[i][var]==x*9+y) {
-                    row=i;
-                    i=9;
-                    break;
-                }
-
-            }
-        }
-
-
-        for (int i = 0; i < 9; ++i) {
-            x_2=sudoku_region[row][i]/9;
-            y_2=sudoku_region[row][i]%9;
-
-            if (x_2!=x && y_2!=y) {
-                if (sudoku[x_2][y_2]==number) {
-                    NumberIsZero=false;
-                    break;
+        if (m>=3000) {
+            SolutionIsNotGood=true;
+            for(x=0;x<9;x++){
+                for(y=0;y<9;y++){
+                    sudoku[x][y]=0;
                 }
             }
+
+
         }
-
-
-
-        if(NumberIsZero==true){
-            sudoku[x][y]=number;
-            ++i;
+        else{
+            SolutionIsNotGood=false;
         }
 
     }
 
-    solution.solve(sudoku);
+
 
    std::ifstream fin("Solution.txt");
     for(x=0;x<9;x++) {
@@ -476,14 +487,11 @@ void Game::start(int delete_number)
     }
     fin.close();
 
-    numbers_delete(sudoku,delete_number);
+    numbers_delete(sudoku,delete_numbers);
 
 
 
     ui->tableWidget->setFont(QFont("Times",15));
-
-
-
     for (x = 0; x < 9; ++x) {
         for (y = 0; y < 9; ++y) {
             ui->tableWidget->setItem(x,y,new QTableWidgetItem(""));
@@ -503,7 +511,7 @@ void Game::start(int delete_number)
     }
 
 
-
+    //these numbers are needed to load the saved game
     QFile fout("firstnumbers.txt");
     QTextStream out(&fout);
 
@@ -530,6 +538,8 @@ void Game::start(int delete_number)
 
 
 
+
+// load saved game
 void Game::load_saved_game()
 {
     for (int i = 0; i < 9; ++i) {
@@ -634,7 +644,7 @@ void Game::on_pushButton_4_clicked()
 
 
 
-//save
+//save the game
 void Game::on_pushButton_2_clicked()
 {
     int x,y;

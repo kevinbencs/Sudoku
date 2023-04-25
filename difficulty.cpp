@@ -8,6 +8,7 @@ Difficulty::Difficulty(QWidget *parent) :
     ui(new Ui::Difficulty)
 {
     ui->setupUi(this);
+    setWindowFlags(Qt::Window);
 }
 
 Difficulty::~Difficulty()

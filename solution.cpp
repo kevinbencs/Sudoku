@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include <fstream>
 #include <sstream>
-#include <unistd.h>
+
 
 
 Solution::Solution()
@@ -15,7 +15,7 @@ Solution::Solution()
 
 
 
-
+//check the number is in the row
 bool Solution::row_check(int sudoku[9][9],const int &x,const int &number)
 {
     bool NumberIsOk=true;
@@ -29,7 +29,7 @@ bool Solution::row_check(int sudoku[9][9],const int &x,const int &number)
 
 
 
-
+//check the number is in the column
 bool Solution::column_check(int sudoku[9][9], const int &y, const int &number)
 {
     bool NumberIsOk=true;
@@ -44,7 +44,7 @@ bool Solution::column_check(int sudoku[9][9], const int &y, const int &number)
 
 
 
-
+//check the number is in the 3X3 region
 bool Solution::region_check(int sudoku[9][9], const int &x, const int &y, const int &number)
 {
     bool NumberIsOk=true;
@@ -79,7 +79,7 @@ bool Solution::region_check(int sudoku[9][9], const int &x, const int &y, const 
 
 
 
-
+//check the number is in the 3X3 region
 bool Solution::region_check(int sudoku[9][9],const int &row, const int &number)
 {
     int x, y;
@@ -101,7 +101,7 @@ bool Solution::region_check(int sudoku[9][9],const int &row, const int &number)
 
 
 
-
+//try writing numbers into the cells
 bool Solution::cell_solve(int sudoku[9][9])
 {
     int x, y, number,x_2,y_2,NumberCounter,number2;
@@ -136,7 +136,7 @@ bool Solution::cell_solve(int sudoku[9][9])
 
 
 
-
+//try writing numbers into the 3X3 regions
 bool Solution::region_solve(int sudoku[9][9])
 {
     int x, y, number, NumberCount,x_2,y_2,number2;
@@ -180,7 +180,7 @@ bool Solution::region_solve(int sudoku[9][9])
 
 
 
-
+//try writing numbers into the rows
 bool Solution::row_solve(int sudoku[9][9])
 {
     int x, y, x_2, y_2, NumberCount,number,number2;
@@ -216,7 +216,7 @@ bool Solution::row_solve(int sudoku[9][9])
 
 
 
-
+//try writing numbers into the columns
 bool Solution::column_solve(int sudoku[9][9])
 {
     int x, y, x_2, y_2, NumberCount,number,number2;
@@ -259,7 +259,7 @@ bool Solution::column_solve(int sudoku[9][9])
 
 
 
-
+// write the solution into the Solution.txt
 void Solution::write_out(int sudoku[9][9])
 {
     int x, y;
@@ -287,9 +287,7 @@ void Solution::write_out(int sudoku[9][9])
 
 
 
-
-
-
+//check the number is in the first 17th numbers
 bool Solution::first_numbers_check( int x, int y, std::vector<std::pair<int,int>> v)
 {
     bool CoordinateIsOk=true;
@@ -306,7 +304,7 @@ bool Solution::first_numbers_check( int x, int y, std::vector<std::pair<int,int>
 
 
 
-void Solution::step_back(int &x, int &y, int &m, int&y_2)
+void Solution::step_back(int &x, int &y, int&y_2,int sudoku[9][9])
 {
     if(y==1){
         y=8;
@@ -336,7 +334,7 @@ std::pair<int,int> Solution::number_change(int sudoku2[9][9],  int x_2,  int y_2
 {
     int x, y, number;
 
-
+    //step back
     if(y_2==0){
         y_2=8;
         --x_2;
@@ -346,7 +344,7 @@ std::pair<int,int> Solution::number_change(int sudoku2[9][9],  int x_2,  int y_2
     }
 
 
-    // ha nem jó, mert benne van az első 17-ben, akk visszalépek
+    //check the number is in the first 17th numbers
     if(!first_numbers_check(x_2,y_2,v)){
         if(y_2==0){
             y_2=8;
@@ -369,7 +367,8 @@ std::pair<int,int> Solution::number_change(int sudoku2[9][9],  int x_2,  int y_2
                 if (sudoku2[x][y]==9){
 
                     sudoku2[x][y]=0;
-                    step_back( x, y, m,y_2);
+                    step_back( x, y, y_2,sudoku2);
+                    m++;
 
                 }
                 else{
@@ -380,12 +379,14 @@ std::pair<int,int> Solution::number_change(int sudoku2[9][9],  int x_2,  int y_2
                             x_2=x;
                             y_2=y;
                             c=1;
+                            m++;
                             break;
                         }
                         else{
                             if (number==9){
                                 sudoku2[x][y]=0;
-                                step_back( x, y, m,y_2);
+                                step_back( x, y,y_2,sudoku2);
+                                m++;
 
                             }
                         }
@@ -396,7 +397,8 @@ std::pair<int,int> Solution::number_change(int sudoku2[9][9],  int x_2,  int y_2
                 }
             }
             else{
-                step_back( x, y, m,y_2);
+                step_back( x, y, y_2,sudoku2);
+                m++;
             }
 
 
@@ -414,24 +416,25 @@ std::pair<int,int> Solution::number_change(int sudoku2[9][9],  int x_2,  int y_2
 
 
 
-void Solution::rand_ger(int sudoku2[9][9],std::vector<std::pair<int,int>> v)
+int Solution::backtrack(int sudoku2[9][9],std::vector<std::pair<int,int>> v)
 {
     int x, y, number;
     bool CoordinateIsOk;
     std::pair<int, int> xy;
     int m=0;
 
-    for(x=0; x<9; x++){
-        for(y=0; y<9; y++){
+    for(x=0; x<9 && m<3000; x++){
+        for(y=0; y<9 && m<3000; y++){
 
 
             CoordinateIsOk=first_numbers_check(x, y, v);
 
 
             if(CoordinateIsOk==true){
-                for(number=1; number<10; number++){
+                for(number=1; number<10 && m<3000; number++){
                     if(row_check(sudoku2,x,number) && column_check(sudoku2,y,number) && region_check(sudoku2,x,y,number)){
                         sudoku2[x][y]=number;
+                        m++;
                         break;
                     }
                     else{
@@ -451,8 +454,10 @@ void Solution::rand_ger(int sudoku2[9][9],std::vector<std::pair<int,int>> v)
 
 
         }
+
     }
 
+    return m;
 
 }
 
@@ -465,11 +470,11 @@ void Solution::rand_ger(int sudoku2[9][9],std::vector<std::pair<int,int>> v)
 
 
 
-void Solution::solve(int sudoku[9][9])
+int Solution::solve(int sudoku[9][9])
 {
     std::vector<std::pair<int,int>> v;
     bool WriteNumber=true;
-    int x,y;
+    int x,y,m;
 
 
     while(WriteNumber){
@@ -497,9 +502,10 @@ void Solution::solve(int sudoku[9][9])
 
 
 
-    rand_ger(sudoku2,v);
+    m=backtrack(sudoku2,v);
     write_out(sudoku2);
 
+    return m;
 
 
 

@@ -10,7 +10,7 @@ class Solution
 
 public:
     Solution();
-    void solve(int sudoku[9][9]);
+    int solve(int sudoku[9][9]);
 
 private:
     bool row_check(int sudoku[9][9], const int &x, const int &number);
@@ -23,13 +23,13 @@ private:
     bool column_solve(int sudoku[9][9]);
     bool region_solve(int sudoku[9][9]);
 
-    void rand_ger(int sudoku2[9][9], std::vector<std::pair<int, int> > v);
+    int backtrack(int sudoku2[9][9], std::vector<std::pair<int, int> > v);
     std::pair<int,int> number_change(int sudoku[9][9], int x_2, int y_2, std::vector<std::pair<int,int>> v, int &m);
     bool first_numbers_check( int x, int y, std::vector<std::pair<int,int>> v);
 
 
     void write_out(int sudoku[9][9]);
-    void step_back(int &x, int &y, int &m, int &y_2);
+    void step_back(int &x, int &y, int &y_2, int sudoku[9][9]);
 
     int sudoku_region[9][9]={{0,1,2,9,10,11,18,19,20},
                             {3,4,5,12,13,14,21,22,23},

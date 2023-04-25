@@ -4,7 +4,7 @@
 #include <QDialog>
 #include "solution.h"
 #include "difficulty.h"
-#include <QPainter>
+
 
 namespace Ui {
 class Game;
@@ -18,8 +18,9 @@ public:
     explicit Game(QWidget *parent = nullptr);
     ~Game();
 
-    void start(int delete_number);
+    void start(int delete_numbers);
     void load_saved_game();
+
 
 private slots:
     void on_pushButton_3_clicked();
@@ -49,7 +50,7 @@ private:
     bool row_solve(int sudoku[9][9], int &n);
 
     void copy(int sudoku[9][9],int sudoku2[9][9]);
-    void numbers_delete(int sudoku[9][9], int delete_number);
+    void numbers_delete(int sudoku[9][9], int delete_numbers);
 
 };
 

@@ -73,6 +73,18 @@
         </item>
         <item>
          <widget class="QPushButton" name="pushButton">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>100</height>
+           </size>
+          </property>
           <property name="font">
            <font>
             <pointsize>30</pointsize>
@@ -98,6 +110,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="pushButton_2">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>100</height>
+           </size>
+          </property>
           <property name="font">
            <font>
             <pointsize>30</pointsize>

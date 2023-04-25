@@ -13,82 +13,14 @@
   <property name="windowTitle">
    <string>Sudoku</string>
   </property>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>230</x>
-     <y>10</y>
-     <width>191</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-   </property>
-  </widget>
-  <widget class="QWidget" name="layoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>200</y>
-     <width>101</width>
-     <height>191</height>
-    </rect>
-   </property>
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <widget class="QPushButton" name="pushButton">
-      <property name="text">
-       <string>Ellenőrzés</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="pushButton_2">
-      <property name="text">
-       <string>Mentés</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="pushButton_3">
-      <property name="text">
-       <string>Új játék</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="pushButton_4">
-      <property name="text">
-       <string>Megoldás</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
   <widget class="QTableWidget" name="tableWidget">
    <property name="geometry">
     <rect>
-     <x>120</x>
+     <x>100</x>
      <y>80</y>
      <width>461</width>
      <height>461</height>
     </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>0</width>
-     <height>0</height>
-    </size>
-   </property>
-   <property name="frameShape">
-    <enum>QFrame::StyledPanel</enum>
-   </property>
-   <property name="frameShadow">
-    <enum>QFrame::Plain</enum>
-   </property>
-   <property name="lineWidth">
-    <number>1</number>
    </property>
    <property name="rowCount">
     <number>9</number>
@@ -126,71 +58,15 @@
    <column/>
    <column/>
    <column/>
-   <item row="0" column="0">
-    <property name="text">
-     <string/>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>14</pointsize>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-   </item>
-   <item row="0" column="1">
-    <property name="font">
-     <font>
-      <pointsize>15</pointsize>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-   </item>
-   <item row="0" column="2">
-    <property name="font">
-     <font>
-      <pointsize>15</pointsize>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-   </item>
-   <item row="1" column="1">
-    <property name="font">
-     <font>
-      <pointsize>15</pointsize>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-   </item>
   </widget>
   <widget class="Line" name="line">
-   <property name="windowModality">
-    <enum>Qt::NonModal</enum>
-   </property>
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
    <property name="geometry">
     <rect>
-     <x>120</x>
+     <x>100</x>
      <y>225</y>
      <width>461</width>
      <height>16</height>
     </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true"/>
    </property>
    <property name="frameShadow">
     <enum>QFrame::Plain</enum>
@@ -205,14 +81,11 @@
   <widget class="Line" name="line_2">
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>375</y>
+     <x>100</x>
+     <y>378</y>
      <width>461</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true"/>
    </property>
    <property name="frameShadow">
     <enum>QFrame::Plain</enum>
@@ -225,15 +98,12 @@
    </property>
   </widget>
   <widget class="Line" name="line_3">
-   <property name="windowModality">
-    <enum>Qt::NonModal</enum>
-   </property>
    <property name="geometry">
     <rect>
-     <x>262</x>
-     <y>80</y>
-     <width>21</width>
-     <height>461</height>
+     <x>100</x>
+     <y>534</y>
+     <width>461</width>
+     <height>16</height>
     </rect>
    </property>
    <property name="frameShadow">
@@ -243,16 +113,16 @@
     <number>4</number>
    </property>
    <property name="orientation">
-    <enum>Qt::Vertical</enum>
+    <enum>Qt::Horizontal</enum>
    </property>
   </widget>
   <widget class="Line" name="line_4">
    <property name="geometry">
     <rect>
-     <x>410</x>
-     <y>80</y>
-     <width>31</width>
-     <height>461</height>
+     <x>100</x>
+     <y>73</y>
+     <width>461</width>
+     <height>16</height>
     </rect>
    </property>
    <property name="frameShadow">
@@ -262,16 +132,16 @@
     <number>4</number>
    </property>
    <property name="orientation">
-    <enum>Qt::Vertical</enum>
+    <enum>Qt::Horizontal</enum>
    </property>
   </widget>
   <widget class="Line" name="line_5">
    <property name="geometry">
     <rect>
-     <x>108</x>
-     <y>80</y>
+     <x>89</x>
+     <y>79</y>
      <width>20</width>
-     <height>461</height>
+     <height>464</height>
     </rect>
    </property>
    <property name="frameShadow">
@@ -287,10 +157,10 @@
   <widget class="Line" name="line_6">
    <property name="geometry">
     <rect>
-     <x>568</x>
+     <x>550</x>
      <y>80</y>
      <width>20</width>
-     <height>461</height>
+     <height>462</height>
     </rect>
    </property>
    <property name="frameShadow">
@@ -306,10 +176,10 @@
   <widget class="Line" name="line_7">
    <property name="geometry">
     <rect>
-     <x>118</x>
-     <y>72</y>
-     <width>461</width>
-     <height>20</height>
+     <x>244</x>
+     <y>80</y>
+     <width>20</width>
+     <height>461</height>
     </rect>
    </property>
    <property name="frameShadow">
@@ -319,16 +189,16 @@
     <number>4</number>
    </property>
    <property name="orientation">
-    <enum>Qt::Horizontal</enum>
+    <enum>Qt::Vertical</enum>
    </property>
   </widget>
   <widget class="Line" name="line_8">
    <property name="geometry">
     <rect>
-     <x>118</x>
-     <y>532</y>
-     <width>461</width>
-     <height>16</height>
+     <x>399</x>
+     <y>80</y>
+     <width>16</width>
+     <height>461</height>
     </rect>
    </property>
    <property name="frameShadow">
@@ -338,8 +208,81 @@
     <number>4</number>
    </property>
    <property name="orientation">
-    <enum>Qt::Horizontal</enum>
+    <enum>Qt::Vertical</enum>
    </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>101</x>
+     <y>13</y>
+     <width>467</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>200</y>
+     <width>82</width>
+     <height>132</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QPushButton" name="pushButton">
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Ellenőrzés</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_2">
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Mentés</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_3">
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Új játék</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_4">
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Megoldás</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>
